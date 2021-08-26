@@ -1,10 +1,11 @@
 package org.whitefossa.bluescreen;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * Class for procedural background generation
@@ -20,6 +21,17 @@ public class ProceduralBackgroundGenerator
     // Concentric circles color
     final private int CircleColor = Color.HSVToColor(new float[] { 266f, 0.87f, 0.3f });
 
+    // Overlay bitmap
+    private Bitmap BackgroundOverlayBitmap;
+
+    /**
+     * Call me from Engine's OnCreate()
+     * @param context Context to get resources from
+     */
+    public void OnCreateHandler(Context context)
+    {
+        BackgroundOverlayBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.background_overlay);
+    }
 
     /**
      * Entry method for background generation
@@ -47,6 +59,9 @@ public class ProceduralBackgroundGenerator
 //        paint.setTextSize(24f);
 //
 //        canvas.drawText("Yiff!", 100, 100, paint);
+
+        // Load background overlay and draw it atop of procedurally-generated content
+        DrawOverlayImage(canvas, paint);
 
         return resultBitmap;
     }
@@ -87,6 +102,17 @@ public class ProceduralBackgroundGenerator
 
             radius += beltWidth;
         }
+    }
+
+    /**
+     * Draws overlay image
+     * @param canvas Where to draw
+     * @param paint With what to draw
+     */
+    private void DrawOverlayImage(Canvas canvas, Paint paint)
+    {
+        BackgroundOverlayBitmap = Bitmap.createScaledBitmap(BackgroundOverlayBitmap, canvas.getWidth(), canvas.getHeight(), true);
+        canvas.drawBitmap(BackgroundOverlayBitmap, 0, 0, paint);
     }
     
 }
