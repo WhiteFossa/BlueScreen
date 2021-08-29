@@ -12,9 +12,11 @@ import android.graphics.Typeface;
  */
 public class StepsCountDrawer
 {
-    // General settings
+    // Color settings
     private static float StepsCounterColorHue = 266.0f;
     private static float StepsCounterColorValue = 1.0f;
+    private static float StepsCounterColorSaturationAFactor = 0.7f;
+    private static float StepsCounterColorSaturationBFactor = 0.3f;
 
     // Steps counter-related settings
     private static final float StepsPositionX = 0.5f;
@@ -91,7 +93,7 @@ public class StepsCountDrawer
             throw new IllegalArgumentException("Wrong steps percent value");
         }
 
-        float intensity = stepsPercent * 0.7f + 0.3f;
+        float intensity = stepsPercent * StepsCounterColorSaturationAFactor + StepsCounterColorSaturationBFactor;
         if (intensity < 0.0f)
         {
             intensity = 0.0f;
