@@ -331,7 +331,10 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
 
         private void DrawWatchFace(Canvas canvas)
         {
-            StepsCountDrawer.DrawStepsCounter(canvas, 7800, 13000);
+            final float seconds =
+                    (mCalendar.get(Calendar.SECOND) + mCalendar.get(Calendar.MILLISECOND) / 1000f);
+
+            StepsCountDrawer.DrawStepsCounter(canvas, (int) seconds, 60);
 
             /*
              * Draw ticks. Usually you will want to bake this directly into the photo, but in
@@ -354,8 +357,7 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
              * These calculations reflect the rotation in degrees per unit of time, e.g.,
              * 360 / 60 = 6 and 360 / 12 = 30.
              */
-            final float seconds =
-                    (mCalendar.get(Calendar.SECOND) + mCalendar.get(Calendar.MILLISECOND) / 1000f);
+
             final float secondsRotation = seconds * 6f;
 
             final float minutesRotation = mCalendar.get(Calendar.MINUTE) * 6f;
