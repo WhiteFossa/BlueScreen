@@ -84,7 +84,8 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
     /**
      * Main class
      */
-    private class Engine extends CanvasWatchFaceService.Engine {
+    private class Engine extends CanvasWatchFaceService.Engine
+    {
         private static final float HOUR_STROKE_WIDTH = 5f;
         private static final float MINUTE_STROKE_WIDTH = 3f;
         private static final float SECOND_TICK_STROKE_WIDTH = 2f;
@@ -131,6 +132,8 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
 
         private Paint BackgroundBitmapPaint = new Paint();
         private Bitmap ProceduralGeneratedBackgroundBitmap;
+
+        private StepsCountDrawer StepsCountDrawer = new StepsCountDrawer();
 
         @Override
         public void onCreate(SurfaceHolder holder) {
@@ -313,7 +316,7 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
             mCalendar.setTimeInMillis(now);
 
             DrawBackground(canvas);
-            drawWatchFace(canvas);
+            DrawWatchFace(canvas);
         }
 
         /**
@@ -326,18 +329,9 @@ public class FerroxianBlueWatchFace extends CanvasWatchFaceService {
             canvas.drawBitmap(ProceduralGeneratedBackgroundBitmap, 0, 0, BackgroundBitmapPaint);
         }
 
-//        private void drawBackground(Canvas canvas) {
-//
-//            if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
-//                canvas.drawColor(Color.BLACK);
-//            } else if (mAmbient) {
-//                canvas.drawBitmap(mGrayBackgroundBitmap, 0, 0, mBackgroundPaint);
-//            } else {
-//                canvas.drawBitmap(mBackgroundBitmap, 0, 0, mBackgroundPaint);
-//            }
-//        }
-
-        private void drawWatchFace(Canvas canvas) {
+        private void DrawWatchFace(Canvas canvas)
+        {
+            StepsCountDrawer.DrawStepsCounter(canvas, 7800, 13000);
 
             /*
              * Draw ticks. Usually you will want to bake this directly into the photo, but in
